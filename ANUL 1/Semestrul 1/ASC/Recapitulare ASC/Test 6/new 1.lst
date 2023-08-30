@@ -1,0 +1,45 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fclose,printf,scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fclose msvcrt.dll
+    13                                  import printf msvcrt.dll
+    14                                  import scanf msvcrt.dll
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18 00000000 00000000                    a dd 0
+    19 00000004 613D00                      mesaj_a db "a=",0
+    20 00000007 256400                      format db "%d", 0
+    21                                  
+    22                                  ; our code starts here
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                      
+    26                                          repeta:
+    27 00000000 68[04000000]                        push mesaj_a
+    28 00000005 FF15[00000000]                      call [printf]
+    29 0000000B 83C404                              add esp, 4*1
+    30                                              
+    31 0000000E 68[00000000]                        push dword a
+    32 00000013 68[07000000]                        push dword format
+    33 00000018 FF15[00000000]                      call [scanf]
+    34 0000001E 83C408                              add esp, 4*2
+    35                                              
+    36 00000021 A0[00000000]                        mov al,[a]
+    37 00000026 3C00                                cmp al,0
+    38 00000028 7402                                jz iesi_repeta
+    39                                          
+    40 0000002A E2D4                            loop repeta
+    41                                          iesi_repeta:
+    42                                      
+    43                                          ; exit(0)
+    44 0000002C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    45 0000002E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,74 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fclose,printf,scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fclose msvcrt.dll
+    13                                  import printf msvcrt.dll
+    14                                  import scanf msvcrt.dll
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18 00000000 00000000                    a dd 0
+    19 00000004 613D00                      mesaj_a db "a=",0
+    20 00000007 256300                      formatc db "%c", 0
+    21 0000000A 256400                      format db "%d", 0
+    22 0000000D 05000000                    k dd 5
+    23 00000011 00000000                    rez dd 0
+    24 00000015 00000000                    numar_curent dd 0
+    25 00000019 00000000                    suma_curenta dd 0
+    26                                  
+    27                                  ; our code starts here
+    28                                  segment code use32 class=code
+    29                                      start:
+    30                                          repeta:
+    31                                          
+    32 00000000 68[04000000]                        push mesaj_a
+    33 00000005 FF15[00000000]                      call [printf]
+    34 0000000B 83C404                              add esp, 4*1
+    35                                              
+    36 0000000E 68[00000000]                        push dword a
+    37 00000013 68[0A000000]                        push dword format
+    38 00000018 FF15[00000000]                      call [scanf]
+    39 0000001E 83C408                              add esp, 4*2
+    40                                              
+    41 00000021 66A1[00000000]                      mov ax,[a]
+    42 00000027 6683F800                            cmp ax,0
+    43 0000002B 744A                                jz iesi_repeta
+    44                                              
+    45 0000002D BE00000000                          mov esi,0
+    46 00000032 8935[19000000]                      mov [suma_curenta],esi
+    47                                              
+    48                                              repeta_numar:
+    49                                              
+    50 00000038 803D[00000000]23                        cmp byte[a],'#'
+    51 0000003F 7421                                    je afisare
+    52                                                  
+    53 00000041 8A1D[00000000]                          mov bl,byte[a]
+    54 00000047 001D[19000000]                          add [suma_curenta],bl
+    55                                                  
+    56 0000004D 68[00000000]                            push dword a
+    57 00000052 68[07000000]                            push dword formatc
+    58 00000057 FF15[00000000]                          call [scanf]
+    59 0000005D 83C408                                  add esp, 4*2
+    60                                                  
+    61 00000060 E2D6                                loop repeta_numar
+    62                                              
+    63                                              afisare:
+    64 00000062 68[00000000]                            push dword a
+    65 00000067 68[0A000000]                            push dword format
+    66 0000006C FF15[00000000]                          call [printf]
+    67 00000072 83C408                                  add esp, 4*2
+    68                                          
+    69 00000075 E289                            loop repeta
+    70                                          iesi_repeta:
+    71                                      
+    72                                          ; exit(0)
+    73 00000077 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    74 00000079 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

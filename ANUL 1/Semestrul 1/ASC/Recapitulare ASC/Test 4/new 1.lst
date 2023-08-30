@@ -1,0 +1,88 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fclose,printf,scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fclose msvcrt.dll
+    13                                  import printf msvcrt.dll
+    14                                  import scanf msvcrt.dll
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18 00000000 00000000                    a dd 0
+    19 00000004 00000000                    b dd 0
+    20 00000008 00000000                    suma dd 0
+    21 0000000C 00000000                    diferenta dd 0
+    22 00000010 00000000                    rez dd 0
+    23 00000014 256400                      format db "%d",0
+    24 00000017 613D00                      mesaj_a db "a=",0
+    25 0000001A 623D00                      mesaj_b db "b=",0
+    26 0000001D 28612B62293D25640A-         mesaj_suma db "(a+b)=%d",10,13,0
+    26 00000026 0D00               
+    27 00000028 28612D62293D25640A-         mesaj_diferenta db "(a-b)=%d",10,13,0
+    27 00000031 0D00               
+    28 00000033 28612B62292A28612D-         mesaj_rez db "(a+b)*(a-b)=%d",0
+    28 0000003C 62293D256400       
+    29                                  
+    30                                  ; our code starts here
+    31                                  segment code use32 class=code
+    32                                      start:
+    33                                      
+    34                                          ;Sa se citeasca de la tastatura doua numere a si b (in baza 10) si sa se calculeze: (a+b) * (a-b)
+    35                                      
+    36 00000000 68[17000000]                    push mesaj_a
+    37 00000005 FF15[00000000]                  call [printf]
+    38 0000000B 83C404                          add esp,4*1
+    39                                          
+    40 0000000E 68[00000000]                    push dword a
+    41 00000013 68[14000000]                    push dword format
+    42 00000018 FF15[00000000]                  call [scanf]
+    43 0000001E 83C408                          add esp, 4*2
+    44                                          
+    45 00000021 68[1A000000]                    push mesaj_b
+    46 00000026 FF15[00000000]                  call [printf]
+    47 0000002C 83C404                          add esp,4*1
+    48                                          
+    49 0000002F 68[04000000]                    push dword b
+    50 00000034 68[14000000]                    push dword format
+    51 00000039 FF15[00000000]                  call [scanf]
+    52 0000003F 83C408                          add esp, 4*2
+    53                                          
+    54 00000042 A0[00000000]                    mov al,[a]
+    55 00000047 0205[04000000]                  add al,[b]
+    56 0000004D A2[08000000]                    mov [suma],al
+    57                                          
+    58 00000052 A0[00000000]                    mov al,[a]
+    59 00000057 2A05[04000000]                  sub al,[b]
+    60 0000005D A2[0C000000]                    mov [diferenta],al
+    61                                          
+    62 00000062 A0[08000000]                    mov al,[suma]
+    63 00000067 8A1D[0C000000]                  mov bl,[diferenta]
+    64 0000006D F6E3                            mul bl
+    65 0000006F 66A3[10000000]                  mov [rez],ax
+    66                                          
+    67 00000075 FF35[08000000]                  push dword [suma]
+    68 0000007B 68[1D000000]                    push dword mesaj_suma
+    69 00000080 FF15[00000000]                  call [printf]
+    70 00000086 83C408                          add esp, 4*2
+    71                                          
+    72 00000089 FF35[0C000000]                  push dword [diferenta]
+    73 0000008F 68[28000000]                    push dword mesaj_diferenta
+    74 00000094 FF15[00000000]                  call [printf]
+    75 0000009A 83C408                          add esp, 4*2
+    76                                          
+    77 0000009D FF35[10000000]                  push dword [rez]
+    78 000000A3 68[33000000]                    push dword mesaj_rez
+    79 000000A8 FF15[00000000]                  call [printf]
+    80 000000AE 83C408                          add esp, 4*2
+    81                                          
+    82                                      
+    83                                          ; exit(0)
+    84 000000B1 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    85 000000B3 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

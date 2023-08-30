@@ -1,0 +1,91 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fprintf,fread,fclose,printf,scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  import fread msvcrt.dll
+    14                                  import fclose msvcrt.dll
+    15                                  import printf msvcrt.dll
+    16                                  import scanf msvcrt.dll
+    17                                  
+    18                                  ; our data is declared here (the variables needed by our program)
+    19                                  segment data use32 class=data
+    20 00000000 696E7075742E747874-         nume db "input.txt",0
+    20 00000009 00                 
+    21 0000000A 7200                        mod_acces db "r",0
+    22 0000000C FFFFFFFF                    descriptor dd -1
+    23 00000010 FFFFFFFF                    nr dd -1
+    24 00000014 00000000                    n dd 0
+    25 00000018 6E3D00                      mesaj_n db "n=",0
+    26 0000001B 256400                      format db "%d", 0
+    27                                  
+    28                                  ; our code starts here
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                      
+    32 00000000 68[18000000]                    push mesaj_n
+    33 00000005 FF15[00000000]                  call [printf]
+    34 0000000B 83C404                          add esp, 4*1
+    35                                          
+    36 0000000E 68[14000000]                    push dword n
+    37 00000013 68[1B000000]                    push dword format
+    38 00000018 FF15[00000000]                  call [scanf]
+    39 0000001E 83C408                          add esp, 4*2
+    40                                          
+    41 00000021 68[0A000000]                    push dword mod_acces
+    42 00000026 68[00000000]                    push dword nume
+    43 0000002B FF15[00000000]                  call [fopen]
+    44 00000031 83C408                          add esp,4*2
+    45                                          
+    46 00000034 83F800                          cmp eax,0
+    47 00000037 7459                            je final_tot
+    48 00000039 A3[0C000000]                    mov dword[descriptor],eax
+    49                                          
+    50                                          repeta:
+    51                                              ;fscanf(descriptor,format,variabile)
+    52 0000003E 68[10000000]                        push dword nr
+    53 00000043 68[1B000000]                        push dword format
+    54 00000048 FF35[0C000000]                      push dword[descriptor]
+    55 0000004E FF15[00000000]                      call [fscanf]
+    56 00000054 83C40C                              add esp,4*3
+    57                                              
+    58 00000057 83F8FF                              cmp eax,-1
+    59 0000005A 7427                                je final_repeta
+    60                                              
+    61 0000005C A1[10000000]                        mov eax,dword[nr]
+    62                                              ; cmp ax,0
+    63                                              ; jns nu_afisa
+    64                                              
+    65 00000061 6689C3                              mov bx,ax
+    66 00000064 F735[14000000]                      div dword[n]
+    67 0000006A 80FC00                              cmp ah,0
+    68 0000006D 6689D8                              mov ax,bx
+    69 00000070 750F                                jne nu_afisa
+    70                                              
+    71 00000072 50                                  push eax
+    72 00000073 68[1B000000]                        push dword format
+    73 00000078 FF15[00000000]                      call [printf]
+    74 0000007E 83C408                              add esp,4*2
+    75                                              
+    76                                              nu_afisa:
+    77 00000081 EBBB                                jmp repeta
+    78                                              
+    79                                          final_repeta:
+    80                                          
+    81                                          ;fclose(descriptor)
+    82 00000083 FF35[0C000000]                  push dword[descriptor]
+    83 00000089 FF15[00000000]                  call [fclose]
+    84 0000008F 83C404                          add esp,4*1
+    85                                          
+    86                                          final_tot:
+    87                                      
+    88                                          ; exit(0)
+    89 00000092 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    90 00000094 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

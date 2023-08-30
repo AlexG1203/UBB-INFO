@@ -1,0 +1,88 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fprintf,fread,fclose,printf,scanf            ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  import fread msvcrt.dll
+    14                                  import fclose msvcrt.dll
+    15                                  import printf msvcrt.dll
+    16                                  import scanf msvcrt.dll
+    17                                  
+    18                                  ; our data is declared here (the variables needed by our program)
+    19                                  segment data use32 class=data
+    20 00000000 696E7075742E747874-         nume_fisier db "input.txt",0
+    20 00000009 00                 
+    21 0000000A 7200                        mod_acces db "r",0
+    22 0000000C FFFFFFFF                    descriptor dd -1
+    23                                      len equ 100
+    24 00000010 00<rept>                    sir times (len+1) db 0
+    25 00000075 257300                      format db "%s",0
+    26 00000078 00000000                    nr_cifp dd 0
+    27                                      ;format_cifp db "Numarul de cifre pare este: %d", 0
+    28                                  
+    29                                  ; our code starts here
+    30                                  segment code use32 class=code
+    31                                      start:
+    32                                      
+    33                                          ;Se citeste un sir de numaere pana la introducerea '#', afiseaza de cate ori apare cifra 2 in sir
+    34                                          
+    35 00000000 68[0A000000]                    push dword mod_acces
+    36 00000005 68[00000000]                    push dword nume_fisier
+    37 0000000A FF15[00000000]                  call [fopen]
+    38 00000010 83C408                          add esp, 4*2
+    39                                          
+    40 00000013 A3[0C000000]                    mov [descriptor],eax
+    41                                          
+    42 00000018 83F800                          cmp eax,0
+    43 0000001B 7462                            je final
+    44 0000001D FF35[0C000000]                      push dword [descriptor]
+    45 00000023 6A64                                push dword len
+    46 00000025 6A01                                push dword 1
+    47 00000027 68[10000000]                        push dword sir        
+    48 0000002C FF15[00000000]                      call [fread]
+    49 00000032 83C410                              add esp, 4*4
+    50                                              
+    51 00000035 BE00000000                          mov esi,0
+    52 0000003A BF00000000                          mov edi,0
+    53                                              repeta:
+    54 0000003F 668B86[10000000]                        mov ax,[sir+esi]
+    55 00000046 46                                      inc esi
+    56 00000047 6683F823                                cmp ax,'#'
+    57 0000004B 7409                                    jz iesi_repeta
+    58 0000004D 6683F832                                cmp ax,'2'
+    59 00000051 75EC                                    jnz repeta
+    60 00000053 47                                      inc edi
+    61                                                  
+    62 00000054 E2E9                                loop repeta
+    63                                              
+    64                                              iesi_repeta:
+    65                                              
+    66 00000056 893D[78000000]                      mov dword [nr_cifp],edi
+    67                                              
+    68                                              ; push dword sir
+    69                                              ; push dword eax
+    70                                              ; push dword format
+    71                                              ; call [printf]
+    72                                              ; add esp, 4*3
+    73                                              
+    74 0000005C FF35[78000000]                      push dword [nr_cifp]
+    75 00000062 68[75000000]                        push dword format
+    76 00000067 FF15[00000000]                      call [printf]
+    77 0000006D 83C408                              add esp, 4*2
+    78                                  
+    79 00000070 FF35[0C000000]                      push dword [descriptor]
+    80 00000076 FF15[00000000]                      call [fclose]
+    81 0000007C 83C404                              add esp, 4*1
+    82                                  
+    83                                          final:
+    84                                          
+    85                                          ; exit(0)
+    86 0000007F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    87 00000081 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

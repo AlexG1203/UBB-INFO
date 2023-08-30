@@ -1,0 +1,52 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit,fopen,fscanf,fclose,printf,scanf              ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import fopen msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import fclose msvcrt.dll
+    13                                  import printf msvcrt.dll
+    14                                  import scanf msvcrt.dll
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18 00000000 00000000                    a dd 0
+    19 00000004 613D00                      mesaj_a db "a=",0
+    20 00000007 256400                      format db "%d",0
+    21 0000000A 4E756D6172756C2069-         format_rez db "Numarul in baza 16 este: %x",0
+    21 00000013 6E2062617A61203136-
+    21 0000001C 20657374653A202578-
+    21 00000025 00                 
+    22 00000026 00000000                    rez dd 0
+    23                                  
+    24                                  ; our code starts here
+    25                                  segment code use32 class=code
+    26                                      start:
+    27                                          
+    28                                          ;Sa se citeasca de la tastatura un numar in baza 10 si sa se afiseze valoarea acelui numar in baza 16.
+    29                                          
+    30 00000000 68[04000000]                    push mesaj_a
+    31 00000005 FF15[00000000]                  call [printf]
+    32 0000000B 83C404                          add esp,4*1
+    33                                          
+    34 0000000E 68[00000000]                    push dword a
+    35 00000013 68[07000000]                    push dword format
+    36 00000018 FF15[00000000]                  call [scanf]
+    37 0000001E 83C408                          add esp, 4*2
+    38                                          
+    39 00000021 A1[00000000]                    mov eax,[a]
+    40 00000026 A3[26000000]                    mov [rez],eax
+    41                                          
+    42 0000002B FF35[26000000]                  push dword [rez]
+    43 00000031 68[0A000000]                    push dword format_rez
+    44 00000036 FF15[00000000]                  call [printf]
+    45 0000003C 83C408                          add esp, 4*2
+    46                                      
+    47                                          ; exit(0)
+    48 0000003F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    49 00000041 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

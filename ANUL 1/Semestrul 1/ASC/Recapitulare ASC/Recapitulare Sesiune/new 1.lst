@@ -1,0 +1,46 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ; x dw -256,256h
+    14                                      ; y dw 256|-256,256h & 256
+    15                                      ; z db $-z,y-x
+    16                                        ; db 'y'-'x','y-x'
+    17                                      ; a db 512>>2,-512<<2
+    18                                      ; b db z-a
+    19                                      ; a2 dw 256,256h
+    20                                      ; a3 dw $-a2
+    21                                      ; a4 equ -256/4
+    22                                      ; a5 db 128>>1,-128<<1
+    23                                      ; a6 dw a5-a2
+    24                                      ; a1 dd '0abcdefh',0abcdefh
+    25                                      ; a2 dw '0abcdefh',3|6
+    26                                      ; a3 dw $-a2,a2-a1
+    27                                      ; a4 db 129>>1,-129<<1
+    28                                      ; a5 dw a2-a4,~(a2-a4)
+    29                                  
+    30                                      ; a7 dd 256h^256,256256h
+    31                                      ; a8 dd (a9-$),-256
+    32                                      ; a9 dw -255,-128
+    33                                      ; a10 times 4 dw 128h,-128
+    34                                      ; a11 db a3
+    35                                      ; ; a12 dw a3
+    36                                  
+    37                                  ; our code starts here
+    38                                  segment code use32 class=code
+    39                                      start:
+    40 00000000 B856000000                      mov eax,256h&255
+    41 00000005 BB56030000                      mov ebx,256^256h
+    42 0000000A F6E7                            mul bh
+    43                                      
+    44                                          ; exit(0)
+    45 0000000C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    46 0000000E FF15[00000000]                  call    [exit]       ; call exit to terminate the program
