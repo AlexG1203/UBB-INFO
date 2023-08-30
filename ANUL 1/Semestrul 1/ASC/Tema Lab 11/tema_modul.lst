@@ -1,0 +1,14 @@
+     1                                  %ifndef _TEMA_ASM_ ; 
+     2                                  %define _TEMA_ASM_;
+     3                                  ;global calcul
+     4                                  
+     5                                  calcul:
+     6 00000000 66678B442404                mov eax, [esp+4]; eax = valoarea de la ebp+8
+     7 00000006 66678B5C2408                mov ebx, [esp+8]; ebx = valoarea de la ebp+12
+     8 0000000C 66678B4C240C                mov ecx, [esp+12]; ecx = valoarea de la ebp+16
+     9 00000012 6601D8                      add eax, ebx; eax = eax + ebx (a+b)
+    10 00000015 6629C8                      sub eax, ecx; eax = eax - ecx (a+b-c)
+    11 00000018 C3                          ret 
+    12                                      
+    13                                  %endif
+    14                                      

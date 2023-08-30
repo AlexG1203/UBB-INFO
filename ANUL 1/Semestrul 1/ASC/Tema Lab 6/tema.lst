@@ -1,0 +1,67 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ;Se da un sir de octeti reprezentand un text (succesiune de cuvinte separate de spatii). Sa se identifice cuvintele de tip palindrom (ale caror oglindiri sunt similare cu cele de plecare): "cojoc", "capac" etc.
+    14 00000000 636F6A6F6320726163-         s db 'cojoc rac mac capac masina '
+    14 00000009 206D61632063617061-
+    14 00000012 63206D6173696E6120 
+    15                                      ls equ $-s
+    16 0000001B 00<rept>                    cuv_curent times ls db 0
+    17 00000036 00<rept>                    rez times ls db 0
+    18                                  
+    19                                  ; our code starts here
+    20                                  segment code use32 class=code
+    21                                      start:
+    22 00000000 B91B000000                      mov ecx,ls; ecx = ls (lungimea sirului s)
+    23 00000005 BE00000000                      mov esi,0; esi = 0
+    24 0000000A BF00000000                      mov edi,0; edi = 0
+    25 0000000F E35A                            jecxz final; se executa codul din interior cat timp ecx != 0
+    26                                              repeta:
+    27 00000011 8A86[00000000]                          mov al,[s+esi]; al = [s+esi] (pune in al valoarea lui s de la s+esi)
+    28 00000017 88C3                                    mov bl,al; bl = al
+    29 00000019 80FB20                                  cmp bl,32; se face scaderea fictiva bl - 32
+    30 0000001C 740A                                    jz next; daca scaderea fictiva anterioara este 0 se executa codul de la eticheta next
+    31 0000001E 8887[1B000000]                          mov [cuv_curent+edi],al; [cuv_curent+edi] = al (pune in cuv_curent la pozitia edi valoarea lui al)
+    32 00000024 46                                      inc esi; incrementeaza esi
+    33 00000025 47                                      inc edi; incrementeaza edi
+    34 00000026 E2E9                                loop repeta
+    35                                                  next:
+    36 00000028 89FD                                        mov ebp,ls-(ls-edi); ebp = ls-(ls-edi) (pune in ebp lungimea cuv_curent)
+    37 0000002A B202                                        mov dl,2; dl = 2 (pentru a afisa 2 daca cuvantul nu e palindrom)
+    38 0000002C B601                                        mov dh,1; dh = 1 (pentru a afisa 1 daca cuvantul e palindrom)
+    39 0000002E BF00000000                                  mov edi,0; edi = 0
+    40                                                          repeta1:
+    41 00000033 8A8D[1A000000]                                  mov cl,[cuv_curent+ebp-1]; cl = [cuv_curent+ebp-1] (pune in cl valoarea de la cuv_curent+ebp-1)
+    42 00000039 8AAF[1B000000]                                  mov ch,[cuv_curent+edi]; ch = [cuv_curent+edi] (pune in ch valoarea de la cuv_curent+edi)
+    43 0000003F 28CD                                            sub ch,cl; ch = ch - cl
+    44 00000041 80FD00                                          cmp ch,0; se face scaderea fictiva ch - 0
+    45 00000044 7517                                            jnz next2; daca scaderea fictiva anterioara nu este 0 se executa codul de la eticheta next2
+    46 00000046 47                                              inc edi; incrementeaza edi
+    47 00000047 4D                                              dec ebp; decrementeaza ebp
+    48 00000048 83FD00                                          cmp ebp,0; se face scaderea fictiva ebp - 0
+    49 0000004B 750E                                            jnz next1; daca scaderea fictiva anterioara nu este 0 se executa codul de la eticheta next1
+    50 0000004D 88B6[36000000]                                  mov [rez+esi],dh; [rez+esi] = dh (pune in rez la pozitia esi valoarea lui dh => cuvantul este palindrom)
+    51 00000053 46                                              inc esi; incrementeaza esi
+    52 00000054 BF00000000                                      mov edi,0; edi = 0
+    53 00000059 E2B6                                            loop repeta
+    54                                                          next1:
+    55 0000005B E2D6                                            loop repeta1
+    56                                                      next2:
+    57 0000005D 8896[36000000]                              mov [rez+esi],dl; [rez+esi] = dl (pune in rez la pozitia esi valoarea lui dl => cuvantul nu este palindrom)
+    58 00000063 46                                      inc esi; incrementeaza esi
+    59 00000064 BF00000000                              mov edi,0; edi = 0
+    60 00000069 E2A6                                    loop repeta
+    61                                          final:
+    62                                      
+    63                                          ; exit(0)
+    64 0000006B 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    65 0000006D FF15[00000000]                  call    [exit]       ; call exit to terminate the program

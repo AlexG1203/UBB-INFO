@@ -1,0 +1,81 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ;Se dau 2 siruri de octeti A si B. Sa se construiasca sirul R care sa contina elementele lui B in ordine inversa urmate de elementele pare ale lui A.
+    14 00000000 02010303040206              a db 2, 1, 3, 3, 4, 2, 6
+    15                                      la equ $-a
+    16 00000007 040507060201                b db 4, 5, 7, 6, 2, 1
+    17                                      lb equ $-b
+    18 0000000D <res 0000000D>              r resb la+lb
+    19                                      
+    20                                      ;Se da un sir de caractere S. Sa se construiasca sirul D care sa contina toate caracterele cifre din sirul S.
+    21                                      ;s db '+', '4', '2', 'a', '8', '4', 'X', '5'
+    22                                      ;ls equ $-s
+    23                                      ;d resb ls
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                      ;Se dau 2 siruri de octeti A si B. Sa se construiasca sirul R care sa contina elementele lui B in ordine inversa urmate de elementele pare ale lui A.
+    29 00000000 B906000000                      mov ecx,lb; exc = lb (lungimea sirului b)
+    30 00000005 BE05000000                      mov esi,lb-1; esi = lb-1 (lungimea sirului b - 1)
+    31 0000000A BF00000000                      mov edi,0; edi = 0
+    32 0000000F E310                            jecxz sfarsit; se executa codul din interior cat timp ecx != 0
+    33                                              repeta:
+    34 00000011 8A86[07000000]                          mov al,[b+esi]; al = [b+esi] (pune in al valoarea lui b de la b+esi)
+    35 00000017 8887[0D000000]                          mov [r+edi],al; pune in sirul r valoarea din al (de la r+edi)
+    36 0000001D 4E                                      dec esi; decrementeaza esi
+    37 0000001E 47                                      inc edi; incrementeaza edi
+    38 0000001F E2F0                                loop repeta
+    39                                          sfarsit:
+    40                                          
+    41 00000021 B907000000                      mov ecx,la; ecx = la (lungimea sirului a)
+    42 00000026 BE00000000                      mov esi,0; esi = 0
+    43 0000002B BF06000000                      mov edi,lb; edi = lb (lungimea sirului b)
+    44 00000030 B302                            mov bl,2; bl = 2 (pentru a verifica paritatea)
+    45 00000032 E31F                            jecxz sfarsit2; se executa codul din interior cat timp ecx != 0
+    46                                              repeta2:
+    47 00000034 8A86[00000000]                          mov al,[a+esi]; al = [a+esi] (pune in al valoarea lui a de la a+esi)
+    48 0000003A B400                                    mov ah,0; pentru conversia al -> ax
+    49 0000003C 6689C2                                  mov dx,ax; dx = ax
+    50 0000003F F6F3                                    div bl; divide pe ah = ax % bl (ah rest)
+    51 00000041 80FC00                                  cmp ah,0; se face scaderea fictiva ah - 0
+    52 00000044 7509                                    jne next; daca scaderea fictiva anterioara nu este 0 atunci se executa codul de la eticheta next
+    53 00000046 668997[0D000000]                            mov [r+edi],dx; pune in sirul r valoarea din dx (de la r+edi)
+    54 0000004D 46                                          inc esi; incrementeaza esi
+    55 0000004E 47                                          inc edi; incrementeaza edi
+    56                                                  next:
+    57 0000004F 46                                      inc esi; incrementeaza esi
+    58 00000050 47                                      inc edi; incrementeaza edi
+    59 00000051 E2E1                                    loop repeta2            
+    60                                          sfarsit2:
+    61                                  
+    62                                          ;Se da un sir de caractere S. Sa se construiasca sirul D care sa contina toate caracterele cifre din sirul S.
+    63                                          ;mov ecx,ls; exc = ls (lungimea sirului s)
+    64                                          ;mov esi,s; esi = s
+    65                                          ;mov edi,d; edi = d
+    66                                          ;mov bl,48; bl = 48 (pentru a putea vedea care din caracterele date sunt cifre)
+    67                                          ;cld; sensul ->, si DF = 0
+    68                                          ;jecxz final; se executa codul din interior cat timp ecx != 0
+    69                                             ; repeta:
+    70                                                  ;lodsb; al = [esi] = s (parcurge fiecare caracter)
+    71                                                  ;mov dl,al; dl = al
+    72                                                  ;sub dl,bl; dl = dl - 48
+    73                                                  ;cmp dl,10; se face scadere fictiva dl - 10
+    74                                                  ;jnb next; daca scaderea fictiva anteriaora este peste 10 atunci se executa codul de la eticheta next
+    75                                                      ;stosb; daca scderea fictiva anteriaora este sub 10 atunci se preia rezultatul si se pune in [edi] = d (echivalent cu mov [d+edi],al)
+    76                                                  ;next:
+    77                                                  ;loop repeta
+    78                                          ;final:
+    79                                          ; exit(0)
+    80 00000053 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    81 00000055 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

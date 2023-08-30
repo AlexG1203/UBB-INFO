@@ -1,0 +1,132 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ;(a+c)-b+a + (d-c) a - byte, b - word, c - double word, d - qword - Interpretare fara semn, Adunari/Scaderi
+    14                                      ;a db 2
+    15                                      ;b dw 3
+    16                                      ;c dd 5
+    17                                      ;d dq 7
+    18                                      
+    19                                      ;a-b-(c-d)+d a - byte, b - word, c - double word, d - qword - Interpretare cu semn, Adunari/Scaderi
+    20                                      ;a db 5
+    21                                      ;b dw 3
+    22                                      ;c dd 5
+    23                                      ;d dq 2
+    24                                      
+    25                                      ;x-b+8+(2*a-b)/(b*b)+e; a-word; b-byte; e-doubleword; x-qword - Interpretare fara semn, Inmultiri/Impartiri
+    26 00000000 0500                        a dw 5
+    27 00000002 02                          b db 2
+    28 00000003 03000000                    e dd 3
+    29 00000007 0700000000000000            x dq 7
+    30                                      
+    31                                      ;x-b+8+(2*a-b)/(b*b)+e; a-word; b-byte; e-doubleword; x-qword - Interpretare cu semn, Inmultiri/Impartiri
+    32                                      ;a dw 5
+    33                                      ;b db 2
+    34                                      ;e dd 3
+    35                                      ;x dq 2
+    36                                  
+    37                                  ; our code starts here
+    38                                  segment code use32 class=code
+    39                                      start:
+    40                                          ;(a+c)-b+a + (d-c) a - byte, b - word, c - double word, d - qword - Interpretare fara semn, Adunari/Scaderi
+    41                                          ;mov eax,0
+    42                                          ;mov eax,dword [a+0]; eax = dword a
+    43                                          ;add eax,[c]; eax = a+c
+    44                                          ;sub eax,dword [b+0]; eax = (a+c) - dword b
+    45                                          ;add eax,dword [a+0]; eax = (a+c) - b + dword a
+    46                                          ;mov ebx,eax; ebx = eax
+    47                                          ;mov edx,0
+    48                                          ;mov eax,[d]
+    49                                          ;sub eax,dword [c+0]
+    50                                          ;add ebx,eax
+    51                                          
+    52                                          ;a-b-(c-d)+d a - byte, b - word, c - double word, d - qword - Interpretare cu semn, Adunari/Scaderi
+    53                                          ;mov eax,[c]
+    54                                          ;cdq
+    55                                          ;sub eax,dword [d+0]
+    56                                          ;sub edx,dword [d+4]; edx:eax = c-d
+    57                                          ;mov ebx,eax; edx:ebx = c-d
+    58                                          ;mov al,[a]
+    59                                          ;cbw; ax=a
+    60                                          ;sub ax,[b]; ax= a-b
+    61                                          ;mov cx,ax
+    62                                          ;mov eax,0
+    63                                          ;mov ax,cx
+    64                                          ;mov ecx,edx; ecx:ebx= c-d
+    65                                          ;cdq; edx:eax= a-b
+    66                                          ;sub edx,ecx
+    67                                          ;sub eax,ebx
+    68                                          ;add eax,dword [d+0]
+    69                                          ;add edx,dword [d+4]
+    70                                          
+    71                                          ;x-b+8+(2*a-b)/(b*b)+e; a-word; b-byte; e-doubleword; x-qword - Interpretare fara semn, Inmultiri/Impartiri
+    72 00000000 66B80200                        mov ax,2
+    73 00000004 668B15[00000000]                mov dx,[a]
+    74 0000000B 66F7E2                          mul dx; ax = 2*a
+    75 0000000E 66BA0000                        mov dx,0; dx:ax = 2*a
+    76 00000012 662B15[04000000]                sub dx,word [b+2]
+    77 00000019 662B05[02000000]                sub ax,word [b]; al = 2*a-b
+    78 00000020 B400                            mov ah,0; ax = 2*a-b
+    79 00000022 6689C3                          mov bx,ax; bx = 2*a-b
+    80 00000025 A0[02000000]                    mov al,[b]
+    81 0000002A 8A25[02000000]                  mov ah,[b]
+    82 00000030 F6E4                            mul ah; ax = b*b
+    83 00000032 6689C1                          mov cx,ax; cx = b*b
+    84 00000035 66B80000                        mov ax,0
+    85 00000039 6689D8                          mov ax,bx; ax = 2*a-b
+    86 0000003C 66F7F1                          div cx; ax = (2*a-b)/(b*b)
+    87 0000003F 6689C3                          mov bx,ax; bx = (2*a-b)/(b*b)
+    88 00000042 A0[02000000]                    mov al,[b]
+    89 00000047 6698                            cbw; ax = word b
+    90 00000049 98                              cwde; eax = dword b
+    91 0000004A 99                              cdq; edx:eax = qword b
+    92 0000004B 6689D9                          mov cx,bx; cx = (2*a-b)/(b*b)
+    93 0000004E 98                              cwde; ecx = (2*a-b)/(b*b)
+    94 0000004F 8B1D[07000000]                  mov ebx,[x]
+    95 00000055 29C3                            sub ebx,eax
+    96 00000057 83C308                          add ebx,8; ebx = x-b+8
+    97 0000005A 99                              cdq; edx:ebx = x-b+8
+    98 0000005B 01D9                            add ecx,ebx; ecx = x-b+8+(2*a-b)/(b*b)
+    99 0000005D 030D[03000000]                  add ecx, dword [e]; ecx = x-b+8+(2*a-b)/(b*b)+e
+   100                                          
+   101                                          ;x-b+8+(2*a-b)/(b*b)+e; a-word; b-byte; e-doubleword; x-qword - Interpretare cu semn, Inmultiri/Impartiri
+   102                                          ;mov ax,2
+   103                                          ;mov dx,[a]
+   104                                          ;imul dx; ax = 2*a
+   105                                          ;sbb dx,word [b+2]
+   106                                          ;sbb ax,word [b]; ax = 2*a-b
+   107                                          ;cbw
+   108                                          ;mov bx,ax; bx = 2*a-b
+   109                                          ;mov al,[b]
+   110                                          ;mov ah,[b]
+   111                                          ;imul ah; ax = b*b
+   112                                          ;mov cx,ax; cx = b*b
+   113                                          ;mov ax,0
+   114                                          ;mov ax,bx; ax = 2*a-b
+   115                                          ;idiv cx; ax = (2*a-b)/(b*b)
+   116                                          ;mov bx,ax; bx = (2*a-b)/(b*b)
+   117                                          ;mov al,[b]
+   118                                          ;cbw; ax = word b
+   119                                          ;cwde; eax = dword b
+   120                                          ;cdq; edx:eax = qword b
+   121                                          ;mov cx,bx; cx = (2*a-b)/(b*b)
+   122                                          ;cwde; ecx = (2*a-b)/(b*b)
+   123                                          ;mov ebx,[x]
+   124                                          ;sbb ebx,eax
+   125                                          ;adc ebx,8; ebx = x-b+8
+   126                                          ;cdq; edx:ebx = x-b+8
+   127                                          ;adc ecx,ebx; ecx = x-b+8+(2*a-b)/(b*b)
+   128                                          ;adc ecx, dword [e]; ecx = x-b+8+(2*a-b)/(b*b)+e
+   129                                          
+   130                                          ; exit(0)
+   131 00000063 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   132 00000065 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,81 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ;(a+b)-(a+d)+(c-a) a,b,c,d - byte, Adunari/Scaderi
+    14 00000000 07                          a db 7
+    15 00000001 06                          b db 6
+    16 00000002 09                          c db 9
+    17 00000003 03                          d db 3
+    18                                      
+    19                                      ;c-(d+a)+(b+c) a,b,c,d - word, Adunari/Scaderi
+    20                                      ;a dw 3
+    21                                      ;b dw 2
+    22                                      ;c dw 15
+    23                                      ;d dw 4
+    24                                      
+    25                                      ;[2*(a+b)-5*c]*(d-3) a,b,c - byte, d - word, Inmultiri/Impartiri
+    26                                      ;a db 3
+    27                                      ;b db 3
+    28                                      ;c db 2
+    29                                      ;d dw 5
+    30                                      
+    31                                      ;(a*b)/c a,b,c,d-byte, e,f,g,h-word, Inmultiri/Impartiri
+    32                                      ;a db 2
+    33                                      ;b db 8
+    34                                      ;c db 4
+    35                                  
+    36                                  ; our code starts here
+    37                                  segment code use32 class=code
+    38                                      start:
+    39                                          ;(a+b)-(a+d)+(c-a) a,b,c,d - byte, Adunari/Scaderi
+    40 00000000 A0[00000000]                    mov al,[a]
+    41 00000005 0205[01000000]                  add al,[b]
+    42 0000000B 8A1D[00000000]                  mov bl,[a]
+    43 00000011 021D[03000000]                  add bl,[d]
+    44 00000017 8A0D[02000000]                  mov cl,[c]
+    45 0000001D 2A0D[00000000]                  sub cl,[a]
+    46 00000023 28D8                            sub al,bl
+    47 00000025 00C8                            add al,cl
+    48                                          
+    49                                          ;c-(d+a)+(b+c) a,b,c,d - word, Adunari/Scaderi
+    50                                          ;mov ax,[d]
+    51                                          ;add ax,[a]
+    52                                          ;mov bx,[b]
+    53                                          ;add bx,[c]
+    54                                          ;mov cx,[c]
+    55                                          ;sub cx,ax
+    56                                          ;add cx,bx
+    57                                          
+    58                                          ;[2*(a+b)-5*c]*(d-3) a,b,c - byte, d - word, Inmultiri/Impartiri
+    59                                          ;mov al,[a]
+    60                                          ;add al,[b]
+    61                                          ;mov ah,2
+    62                                          ;mul ah; ax=2*(a+b)
+    63                                          ;mov bx,ax
+    64                                          ;mov al,5
+    65                                          ;mov ah,[c]
+    66                                          ;mul ah; ax=al*ah
+    67                                          ;sub bx,ax
+    68                                          ;mov ax,[d]
+    69                                          ;sub ax,3
+    70                                          ;mul bx
+    71                                          
+    72                                          ;(a*b)/c a,b,c,d-byte, e,f,g,h-word, Inmultiri/Impartiri
+    73                                          ;mov al,[a]
+    74                                          ;mov bl,[b]
+    75                                          ;mul bl; ax=a*b
+    76                                          ;mov cl,[c]
+    77                                          ;div cl
+    78                                      
+    79                                          ; exit(0)
+    80 00000027 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    81 00000029 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

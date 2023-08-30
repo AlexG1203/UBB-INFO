@@ -1,0 +1,95 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  ; declare extern functions used by the programme
+     6                                  extern exit, printf, scanf ; add printf and scanf as extern functions            
+     7                                  import exit msvcrt.dll    
+     8                                  import printf msvcrt.dll    ; tell the assembler that function printf is found in msvcrt.dll library
+     9                                  import scanf msvcrt.dll     ; similar for scanf
+    10                                  %include "tema_modul.asm"
+     1                              <1> %ifndef _TEMA_ASM_ ; 
+     2                              <1> %define _TEMA_ASM_;
+     3                              <1> ;global calcul
+     4                              <1> 
+     5                              <1> calcul:
+     6 00000000 8B442404            <1>     mov eax, [esp+4]; eax = valoarea de la ebp+8
+     7 00000004 8B5C2408            <1>     mov ebx, [esp+8]; ebx = valoarea de la ebp+12
+     8 00000008 8B4C240C            <1>     mov ecx, [esp+12]; ecx = valoarea de la ebp+16
+     9 0000000C 01D8                <1>     add eax, ebx; eax = eax + ebx (a+b)
+    10 0000000E 29C8                <1>     sub eax, ecx; eax = eax - ecx (a+b-c)
+    11 00000010 C3                  <1>     ret 
+    12                              <1>     
+    13                              <1> %endif
+    14                              <1>     
+    11                                  ;extern calcul
+    12                                                            
+    13                                  segment data use32 class=data
+    14 00000011 00000000                	a dd  0       
+    15 00000015 00000000                	b dd  0       
+    16 00000019 00000000                	c dd  0       
+    17 0000001D 613D00                  	message_a  db "a=", 0
+    18 00000020 623D00                  	message_b  db "b=", 0
+    19 00000023 633D00                  	message_c  db "c=", 0
+    20 00000026 256400                  	format_citire_numar  db "%d", 0
+    21 00000029 61202B2062202D2063-         format_printare_numar db "a + b - c = %d ", 0
+    21 00000032 203D2025642000     
+    22                                      
+    23                                  segment code use32 class=code
+    24                                      start:
+    25                                         
+    26                                          ;apel printf("a=")
+    27 00000000 68[1D000000]                    push dword message_a
+    28 00000005 FF15[00000000]                  call [printf]      
+    29 0000000B 83C404                          add esp, 4*1  
+    30                                          
+    31                                          ;apel scanf("%x", a)
+    32 0000000E 68[11000000]                    push dword a 
+    33 00000013 68[26000000]                    push dword format_citire_numar
+    34 00000018 FF15[00000000]                  call [scanf]       
+    35 0000001E 83C408                          add esp, 4 * 2
+    36                                          
+    37                                          ;apel printf("b=")
+    38 00000021 68[20000000]                    push dword message_b 
+    39 00000026 FF15[00000000]                  call [printf]      
+    40 0000002C 83C404                          add esp, 4*1
+    41                                          
+    42                                          ;apel scanf("%x", b)
+    43 0000002F 68[15000000]                    push dword b
+    44 00000034 68[26000000]                    push dword format_citire_numar
+    45 00000039 FF15[00000000]                  call [scanf]       
+    46 0000003F 83C408                          add esp, 4 * 2
+    47                                          
+    48                                          ;apel printf("c=")
+    49 00000042 68[23000000]                    push dword message_c 
+    50 00000047 FF15[00000000]                  call [printf]      
+    51 0000004D 83C404                          add esp, 4*1
+    52                                          
+    53                                          ;apel scanf("%x", c)
+    54 00000050 68[19000000]                    push dword c
+    55 00000055 68[26000000]                    push dword format_citire_numar
+    56 0000005A FF15[00000000]                  call [scanf]       
+    57 00000060 83C404                          add esp, 4 * 1
+    58                                          
+    59                                          ;mov eax, 0
+    60                                          ;mov al, [a]
+    61                                          ;add al, [b]
+    62                                          ;sub al, [c]
+    63                                          ;mov [a], al
+    64                                          
+    65 00000063 FF35[19000000]                  push dword [c]; punem pe stiva c
+    66 00000069 FF35[15000000]                  push dword [b]; punem pe stiva b
+    67 0000006F FF35[11000000]                  push dword [a]; punem pe stiva a
+    68 00000075 E8(00000000)                    call calcul; apelam subprogramul
+    69                                          ;add esp, 4 * 1
+    70                                          
+    71                                          ;format printare pe ecran
+    72 0000007A 50                              push dword eax
+    73 0000007B 68[29000000]                    push dword format_printare_numar
+    74 00000080 FF15[00000000]                  call [printf]
+    75 00000086 83C408                          add esp, 4 * 2
+    76                                                             
+    77                                          
+    78                                          ; exit(0)
+    79 00000089 6A00                            push dword 0      ; place on stack parameter for exit
+    80 0000008B FF15[00000000]                  call [exit]       ; call exit to terminate the program
