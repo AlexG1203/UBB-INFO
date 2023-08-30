@@ -1,0 +1,20 @@
+﻿  main.cpp
+C:\UBB\Semestrul 2\Algoritmica grafelor\Lab 2\Lab 2\main.cpp(156,20): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\utility(172): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
+          with
+          [
+              _Ty2=int
+          ]
+C:\UBB\Semestrul 2\Algoritmica grafelor\Lab 2\Lab 2\main.cpp(171,22): message : see reference to function template instantiation 'std::pair<int,int>::pair<int,size_t&,0>(_Other1 &&,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=size_t &
+          ]
+C:\UBB\Semestrul 2\Algoritmica grafelor\Lab 2\Lab 2\main.cpp(171,9): message : see reference to function template instantiation 'std::pair<int,int>::pair<int,size_t&,0>(_Other1 &&,_Other2) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=size_t &
+          ]
+  Lab 2.vcxproj -> C:\UBB\Semestrul 2\Algoritmica grafelor\Lab 2\x64\Debug\Lab 2.exe
