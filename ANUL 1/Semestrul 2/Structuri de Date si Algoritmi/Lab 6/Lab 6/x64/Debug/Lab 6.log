@@ -1,0 +1,9 @@
+﻿  App.cpp
+  Dictionar.cpp
+C:\Users\Alex\Downloads\SDA_Lab6_P14-main\Dictionar.cpp(41,35): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+C:\Users\Alex\Downloads\SDA_Lab6_P14-main\Dictionar.cpp(71,47): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+  IteratorDictionar.cpp
+  TestExtins.cpp
+  TestScurt.cpp
+  Generating Code...
+  Lab 6.vcxproj -> C:\UBB\Semestrul 2\Structuri de date si algoritmi\Lab 6\x64\Debug\Lab 6.exe
