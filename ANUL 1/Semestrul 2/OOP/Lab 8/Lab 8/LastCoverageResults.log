@@ -1,0 +1,21 @@
+[2023-05-08 02:25:47] [info] Start Program:
+Path:"C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\x64\Debug\Lab 8.exe"
+Arguments:
+Working directory: "C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\Lab 8\"
+Modules: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\x64\Debug\Lab 8.exe Excluded: 
+Sources: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\Lab 8 Excluded: 
+Log Level: Normal
+Cover Children: 0
+Aggregate by file: 1
+Continue after C++ exception: 0
+Optimized build support: 0
+Export: Binary C:\Users\Alex\AppData\Local\Temp\vtu4mcwl.oqg 
+Input coverage: 
+Unified diff: 
+Excluded line regular expressions: 
+Substitute pdb source paths: 
+
+[2023-05-08 02:25:47] [info] Module: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\x64\Debug\Lab 8.exe is selected because it matches selected pattern: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 8\x64\Debug\Lab 8.exe
+[2023-05-08 02:25:47] [info] ----------------------------------------------------
+[2023-05-08 02:25:47] [info] Coverage binary generated in file: C:\Users\Alex\AppData\Local\Temp\vtu4mcwl.oqg
+[2023-05-08 02:25:47] [info] ----------------------------------------------------
