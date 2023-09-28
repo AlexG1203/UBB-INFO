@@ -1,0 +1,7 @@
+1,a,ai,9
+7,b,mate-info,37
+8,c,mate-info,22
+10,e,mate,37
+2,daniel,mate,52
+71,b,mate-info,37
+82,c,mate-info,22
