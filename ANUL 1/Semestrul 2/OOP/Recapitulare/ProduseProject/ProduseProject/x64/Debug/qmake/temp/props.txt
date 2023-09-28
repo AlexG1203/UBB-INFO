@@ -1,0 +1,25 @@
+QT_SYSROOT:
+QT_INSTALL_PREFIX:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64
+QT_INSTALL_ARCHDATA:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64
+QT_INSTALL_DATA:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64
+QT_INSTALL_DOCS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/Docs/Qt-6.5.0
+QT_INSTALL_HEADERS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/include
+QT_INSTALL_LIBS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/lib
+QT_INSTALL_LIBEXECS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/bin
+QT_INSTALL_BINS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/bin
+QT_INSTALL_TESTS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/tests
+QT_INSTALL_PLUGINS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/plugins
+QT_INSTALL_QML:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/qml
+QT_INSTALL_TRANSLATIONS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/translations
+QT_INSTALL_CONFIGURATION:
+QT_INSTALL_EXAMPLES:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/Examples/Qt-6.5.0
+QT_INSTALL_DEMOS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/Examples/Qt-6.5.0
+QT_HOST_PREFIX:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64
+QT_HOST_DATA:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64
+QT_HOST_BINS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/bin
+QT_HOST_LIBEXECS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/bin
+QT_HOST_LIBS:C:/UBB/Semestrul 2/Programare orientata obiect/Qt/6.5.0/msvc2019_64/lib
+QMAKE_SPEC:win32-msvc
+QMAKE_XSPEC:win32-msvc
+QMAKE_VERSION:3.1
+QT_VERSION:6.5.0
