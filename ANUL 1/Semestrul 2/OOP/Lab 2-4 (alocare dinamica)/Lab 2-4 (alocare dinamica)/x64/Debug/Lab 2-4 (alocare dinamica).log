@@ -1,0 +1,15 @@
+﻿  ui.c
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(33,13): warning C4047: 'function': 'MyList *' differs in levels of indirection from 'MyList **'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(33,11): warning C4024: 'size': different types for formal and actual parameter 1
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(37,30): warning C4047: 'function': 'MyList *' differs in levels of indirection from 'MyList **'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(37,28): warning C4024: 'size': different types for formal and actual parameter 1
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(51,19): warning C4474: 'scanf' : too many arguments passed for format string
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(51,19): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(55,22): warning C4474: 'scanf' : too many arguments passed for format string
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(55,22): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(72,23): warning C4474: 'scanf' : too many arguments passed for format string
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(72,23): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(76,27): warning C4474: 'scanf' : too many arguments passed for format string
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(76,27): message : placeholders and their parameters expect 1 variadic arguments, but 2 were provided
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\Lab 2-4 (alocare dinamica)\ui.c(185,19): warning C4133: 'function': incompatible types - from 'OfertaStore *' to 'MyList *'
+  Lab 2-4 (alocare dinamica).vcxproj -> C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4 (alocare dinamica)\x64\Debug\Lab 2-4 (alocare dinamica).exe
