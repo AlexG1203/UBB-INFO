@@ -1,0 +1,10 @@
+﻿  moc ModelSimulare2.h
+  ui.cpp
+  device.cpp
+  device_repo.cpp
+  device_service.cpp
+  ModelSimulare2.cpp
+  main.cpp
+  qrc_ModelSimulare2.cpp
+  moc_ModelSimulare2.cpp
+  Model Simulare 2.vcxproj -> C:\UBB\Semestrul 2\Programare orientata obiect\Model Simulare 2\x64\Debug\Model Simulare 2.exe
