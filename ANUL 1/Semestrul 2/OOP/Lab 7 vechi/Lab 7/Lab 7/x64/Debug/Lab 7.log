@@ -1,0 +1,92 @@
+﻿  console.cpp
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): error C2662: 'T *vector<T>::begin(void) noexcept': cannot convert 'this' pointer from 'const vector<Medicament>' to 'vector<Medicament> &'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): message : Conversion loses qualifiers
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(32,8): message : see declaration of 'vector<Medicament>::begin'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): message : while trying to match the argument list '()'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): error C2662: 'T *vector<T>::end(void) noexcept': cannot convert 'this' pointer from 'const vector<Medicament>' to 'vector<Medicament> &'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): message : Conversion loses qualifiers
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(36,8): message : see declaration of 'vector<Medicament>::end'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,25): message : while trying to match the argument list '()'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,31): error C3536: '<begin>$L0': cannot be used before it is initialized
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,31): error C3536: '<end>$L0': cannot be used before it is initialized
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\console.cpp(16,29): error C2100: illegal indirection
+  main.cpp
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\main.cpp(8,2): error C3861: 'testValidator': identifier not found
+  MedicamentRepo.cpp
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(75,24): error C2676: binary '==': 'T' does not define this operator or a conversion to a type acceptable to the predefined operator
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(71,1): message : while compiling class template member function 'void vector<Medicament>::erase(const T *)'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentRepo.cpp(21,13): message : see reference to function template instantiation 'void vector<Medicament>::erase(const T *)' being compiled
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentRepo.h(10,21): message : see reference to class template instantiation 'vector<Medicament>' being compiled
+  MedicamentStore.cpp
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(14): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(16,25): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(17,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(17,15): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(18,8): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): error C2662: 'T *vector<T>::begin(void) noexcept': cannot convert 'this' pointer from 'const vector<Medicament>' to 'vector<Medicament> &'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): message : Conversion loses qualifiers
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(32,8): message : see declaration of 'vector<Medicament>::begin'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): message : while trying to match the argument list '()'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): error C2662: 'T *vector<T>::end(void) noexcept': cannot convert 'this' pointer from 'const vector<Medicament>' to 'vector<Medicament> &'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): message : Conversion loses qualifiers
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(36,8): message : see declaration of 'vector<Medicament>::end'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,35): message : while trying to match the argument list '()'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,39): error C3536: '<begin>$L0': cannot be used before it is initialized
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,39): error C3536: '<end>$L0': cannot be used before it is initialized
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(57,37): error C2100: illegal indirection
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(58,7): error C2664: '_Ret std::_Func_class<_Ret,const Medicament &>::operator ()(const Medicament &) const': cannot convert argument 1 from 'const int' to 'const Medicament &'
+          with
+          [
+              _Ret=bool
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(58,11): message : Reason: cannot convert from 'const int' to 'const Medicament'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(58,11): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\include\functional(869,10): message : see declaration of 'std::_Func_class<_Ret,const Medicament &>::operator ()'
+          with
+          [
+              _Ret=bool
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(58,7): message : while trying to match the argument list '(const int)'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(59,7): error C2664: 'void vector<Medicament>::push_back(const T &)': cannot convert argument 1 from 'const int' to 'const T &'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(59,18): message : Reason: cannot convert from 'const int' to 'const T'
+          with
+          [
+              T=Medicament
+          ]
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(59,18): message : No constructor could take the source type, or constructor overload resolution was ambiguous
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\vector.h(65,10): message : see declaration of 'vector<Medicament>::push_back'
+C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7 vechi\Lab 7\Lab 7\MedicamentStore.cpp(59,7): message : while trying to match the argument list '(const int)'
+  vector.cpp
+  Generating Code...
