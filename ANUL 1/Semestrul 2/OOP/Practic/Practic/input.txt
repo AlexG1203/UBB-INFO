@@ -1,0 +1,16 @@
+1
+nume1
+65
+ai
+2
+nume2
+18
+mate-info
+3
+nume 3
+25
+info
+4
+nume4
+19
+mate-info

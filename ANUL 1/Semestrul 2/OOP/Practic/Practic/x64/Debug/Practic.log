@@ -1,0 +1,10 @@
+﻿  GUI.cpp
+  repo.cpp
+  service.cpp
+  domain.cpp
+  Practic.cpp
+  main.cpp
+C:\UBB\Semestrul 2\Programare orientata obiect\Practic\Practic\service.cpp(45,23): warning C4552: '+': result of expression not used
+  qrc_Practic.cpp
+  moc_Practic.cpp
+  Practic.vcxproj -> C:\UBB\Semestrul 2\Programare orientata obiect\Practic\x64\Debug\Practic.exe
