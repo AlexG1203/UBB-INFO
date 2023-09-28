@@ -1,0 +1,21 @@
+[2023-04-04 17:50:07] [info] Start Program:
+Path:"C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\x64\Debug\Lab 5 final.exe"
+Arguments:
+Working directory: "C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\Lab 5 final\"
+Modules: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\x64\Debug\Lab 5 final.exe Excluded: 
+Sources: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\Lab 5 final Excluded: 
+Log Level: Normal
+Cover Children: 0
+Aggregate by file: 1
+Continue after C++ exception: 0
+Optimized build support: 0
+Export: Binary C:\Users\Alex\AppData\Local\Temp\vfrje1ah.kxy 
+Input coverage: 
+Unified diff: 
+Excluded line regular expressions: 
+Substitute pdb source paths: 
+
+[2023-04-04 17:50:07] [info] Module: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\x64\Debug\Lab 5 final.exe is selected because it matches selected pattern: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 5 final\x64\Debug\Lab 5 final.exe
+[2023-04-04 17:50:07] [info] ----------------------------------------------------
+[2023-04-04 17:50:07] [info] Coverage binary generated in file: C:\Users\Alex\AppData\Local\Temp\vfrje1ah.kxy
+[2023-04-04 17:50:07] [info] ----------------------------------------------------
