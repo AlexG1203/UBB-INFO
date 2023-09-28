@@ -1,0 +1,11 @@
+﻿  console.cpp
+  main.cpp
+  Medicament.cpp
+  Medicament.h
+  MedicamentRepo.cpp
+  MedicamentStore.cpp
+  test.cpp
+  validator.cpp
+  Generating Code...
+x64\Debug\Medicament.obj : warning LNK4042: object specified more than once; extras ignored
+  Lab 7.vcxproj -> C:\UBB\Semestrul 2\Programare orientata obiect\Lab 7\x64\Debug\Lab 7.exe
