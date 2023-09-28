@@ -1,0 +1,28 @@
+1
+John Deere
+camp
+0
+2
+Brand 2
+teren minat
+10
+4
+Brand 4
+teren minat
+2
+3
+Tractor 4
+Camp
+2
+5
+Tractor 5
+Porumb
+6
+6
+A
+Porumb
+6
+7
+A
+Porumb
+6
