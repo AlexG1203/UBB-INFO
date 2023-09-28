@@ -1,0 +1,21 @@
+[2023-03-21 17:04:54] [info] Start Program:
+Path:"C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\x64\Debug\Lab 2-4.exe"
+Arguments:
+Working directory: "C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\Lab 2-4\"
+Modules: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\x64\Debug\Lab 2-4.exe Excluded: 
+Sources: Selected: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\Lab 2-4 Excluded: 
+Log Level: Normal
+Cover Children: 0
+Aggregate by file: 1
+Continue after C++ exception: 0
+Optimized build support: 0
+Export: Binary C:\Users\Alex\AppData\Local\Temp\hmkwzfzw.li1 
+Input coverage: 
+Unified diff: 
+Excluded line regular expressions: 
+Substitute pdb source paths: 
+
+[2023-03-21 17:04:54] [info] Module: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\x64\Debug\Lab 2-4.exe is selected because it matches selected pattern: C:\UBB\Semestrul 2\Programare orientata obiect\Lab 2-4\x64\Debug\Lab 2-4.exe
+[2023-03-21 17:04:54] [info] ----------------------------------------------------
+[2023-03-21 17:04:54] [info] Coverage binary generated in file: C:\Users\Alex\AppData\Local\Temp\hmkwzfzw.li1
+[2023-03-21 17:04:54] [info] ----------------------------------------------------
